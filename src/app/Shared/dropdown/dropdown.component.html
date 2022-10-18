@@ -1,0 +1,10 @@
+<div class="dropdown dropdown--left" [ngClass]="{'dropdown--opened': isOpened}" (click)="isOpened = !isOpened">
+  <!-- header -->
+  <div class="dropdown__header">
+      <ng-content select=".header"></ng-content>
+  </div>
+  <!-- body -->
+  <div class="dropdown__body">
+      <ng-content select=".body"></ng-content>
+  </div>
+</div>

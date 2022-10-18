@@ -1,0 +1,47 @@
+<app-dropdown>
+  <ng-container class="header">
+    <div class="image image--small" style="background-image: url('assets/img/icons/icon-cart-big.svg')">
+      <div class="notification notification--danger">
+        {{shoppingList.length}}
+      </div>
+    </div>
+  </ng-container>
+  <ng-container class="body">
+    <!-- items -->
+<ul class="dropdown__items list list--vr-separator">
+<li *ngFor="let product of shoppingList" class="dropdown__item list__item">
+  <!-- item small 2 -->
+  <div class="item-small-1">
+      <!-- item data -->
+      <div class="item-small-1__data">
+          <!-- title -->
+          <a href="" class="item-small-1__title">{{product.data[0].title}}</a>
+          <!-- price -->
+          <span class="item-small-1__description">
+              1 X ${{getPrice(product)}}
+          </span>
+      </div>
+      <!-- item image -->
+      <div class="item-small-1__image-box">
+          <a href="#" class="item-small-1__image image" style="background-image: url('assets/img/products/product-1.jpg')">
+          </a>
+          <a href="#" class="item-small-1__action">
+              <i class="fas fa-times"></i>
+          </a>
+      </div>
+  </div>
+</li>
+</ul>
+<!-- totals -->
+<div class="separator"></div>
+<div class="block">
+<span class="lable">Total:</span>
+<span class="lable">$2870</span>
+</div>
+<!-- actions -->
+<div class="block list list--hr">
+<a class="list-item btn btn--gray" href="">View Cart</a>
+<a class="list-item btn btn--primary" href="">Checkout</a>
+</div>
+  </ng-container>
+</app-dropdown>

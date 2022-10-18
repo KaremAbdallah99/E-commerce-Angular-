@@ -1,0 +1,96 @@
+<!-- add Item -->
+<div class=" container">
+  <form [formGroup]="myForm" class="add-product">
+      <div class="add-product__images slider">
+          <div class="add-product__image-actions">
+              <div class="add-product__image-action">
+                  <a href="#"><i class="fas fa-plus-square"></i></a>
+                  <a href="#"><i class="fas fa-edit"></i></a>
+                  <a href="#"><i class="fas fa-trash-alt"></i></a>
+              </div>
+          </div>
+          <div class="slider__items" formArrayName="imageUrls">
+            <div *ngIf="imageUrls.controls.length === 0" class="slider__item active" [ngStyle]="{'background-image': 'url(assets/img/products/product-grey-1.jpg)'}"></div>
+              <div *ngFor="let imageUrl of imageUrls.controls" class="slider__item active" [ngStyle]="{'background-image': 'url(' + imageUrl.value + ')'}"></div>
+          </div>
+          <div class="slider__indicators">
+              <span class="slider__indicator active"></span>
+              <span class="slider__indicator"></span>
+              <span class="slider__indicator"></span>
+          </div>
+      </div>
+      <div class="add-product__data">
+          <div class="form-controls">
+              <section class="tabs" formArrayName="data">
+                  <div class="tabs__headers">
+                      <div [formGroupName]="i" (click)="currentLang = i" *ngFor="let lang of langs; let i = index" class="tabs__header" [ngClass]="{'active': currentLang === i}">
+                          {{lang.name}}
+                      </div>
+                  </div>
+                  <div class="tabs__bodies">
+                      <div *ngFor="let lang of langs; let i = index" class="tabs__body" [ngClass]="{'active': i === currentLang}">
+                          <div class="form-group"> <!-- invalid -->
+                              <label for="">Name</label>
+                              <input class="form-control" type="text" name="textName">
+                          </div>
+                          <div class="form-group">
+                              <label for="">Description</label>
+                              <textarea class="form-control" name="textDescription" cols="30" rows="4"></textarea>
+                          </div>
+                      </div>
+                  </div>
+              </section>
+
+              <div class="form-group">
+                  <label for="">Price</label>
+                  <input class="form-control" type="text" name="textPrice" [formControl]="price">
+              </div>
+              <div class="add-product__discount">
+                  <div class="form-group">
+                      <label for="">Satus</label>
+                      <div class="form-group__radios">
+                          <div class="form-group__radio"><input  type="radio" name="radioSale"><span>On Sale</span></div>
+                          <div class="form-group__radio"><input  type="radio" name="radioSale"><span>Not On Sale</span></div>
+                      </div>
+                  </div>
+                  <div class="form-group" [ngClass]="{'invalid': discount.invalid && discount.touched}">
+                      <label for="">Discount</label>
+                      <input class="form-control" type="text" name="textDiscount" formControlName="discount">
+                  </div>
+                  <div *ngIf="discount.errors?.['required']">Discount is required</div>
+                  <div *ngIf="discount.errors?.['max']">Discount must not exceed {{discount.errors?.['max'].max}}</div>
+              </div>
+              <div class="form-group" formArrayName="paymentTypes">
+                  <label for="">Payment Types</label>
+                  <div class="form-group__checkboxs">
+                      <div *ngFor="let paymentTypes of paymentsType; let i = index" class="form-group__checkbox"><input type="checkbox" [name]="'check' + i" [value]="paymentTypes.id" id="" (click)="onPaymentTypeChecked($event)"><span>{{paymentTypes.title}}</span></div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="">Category</label>
+                  <select class="form-control" name="ddlCategory" formControlName="category">
+                      <option *ngFor="let category of productCategories" [value]="category.id">{{category.title}}</option>
+                  </select>
+              </div>
+
+              <div class="taged-textbox form-group" formArrayName="tags">
+                  <label class="taged-textbox__lable" for="">Tags</label>
+                  <div class="taged-textbox__data">
+                      <div class="taged-textbox__tags">
+                          <div *ngFor="let tag of tags.controls" class="taged-textbox__tag"><span>{{tag.value}}</span><a href="#" class="taged-textbox__remove"><i
+                                      class="fas fa-times"></i></a></div>
+                      </div>
+                      <div class="taged-textbox__clear">
+                          <a href="#"><i class="fas fa-times"></i></a>
+                      </div>
+                  </div>
+                  <input #txtTag (keyup.enter)="onAddTag(txtTag)" class="taged-textbox__textbox form-control" type="text" name="textTags">
+              </div>
+              <div class="add-product__actions">
+                  <button class="btn btn--gray">Cancel</button>
+                  <button class="btn btn--primary" (click)="onSubmit()">Add</button>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>
